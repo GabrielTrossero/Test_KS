@@ -11,7 +11,7 @@ class Treatment extends Model
 
     protected $table = "treatment";
     
-    public $timestamps = false; //si está en true no me deja modificar el formato de la fecha
+    public $timestamps = false; //if is true, it does not allow me to modify the date format
 
     protected $fillable = [
         'external_id', 'dentist_id', 'patient_id', 'plates', 'created_at', 'updated_at', 'ended_at'

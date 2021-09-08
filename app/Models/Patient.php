@@ -11,7 +11,7 @@ class Patient extends Model
 
     protected $table = "patient";
     
-    public $timestamps = false; //si está en true no me deja modificar el formato de la fecha
+    public $timestamps = false; //if is true, it does not allow me to modify the date format
 
     protected $fillable = [
         'user_id', 'created_at', 'updated_at'

@@ -11,7 +11,7 @@ class User extends Model
 
     protected $table = "user";
     
-    public $timestamps = false; //si está en true no me deja modificar el formato de la fecha
+    public $timestamps = false; //if is true, it does not allow me to modify the date format
 
     protected $fillable = [
         'id', 'name', 'surname', 'gender', 'email', 'password', 'created_at', 'updated_at'

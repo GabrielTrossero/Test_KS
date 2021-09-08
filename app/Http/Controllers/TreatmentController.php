@@ -11,12 +11,17 @@ use App\Models\User;
 
 class TreatmentController extends Controller
 {
+    /**
+     * list of Treatments
+     * 
+     * @return view
+     */
     public function list()
     {
         $treatments = Treatment::all();
 
         foreach ($treatments as $treatment) {
-            //formalizar json Dentist
+            //formalize json Dentist
             $treatment->dentist->full_name = $treatment->dentist->user->name .' '. $treatment->dentist->user->surname;
             $treatment->dentist->email = $treatment->dentist->user->email;
             $treatment->dentist->makeHidden('user');
@@ -24,7 +29,7 @@ class TreatmentController extends Controller
             $treatment->dentist->makeHidden('updated_at');
             $treatment->dentist->makeHidden('user_id');
 
-            //formalizar json Patient
+            //formalize json Patient
             $treatment->patient->full_name = $treatment->patient->user->name .' '. $treatment->patient->user->surname;
             $treatment->patient->email = $treatment->patient->user->email;
             $treatment->patient->makeHidden('user');
@@ -32,11 +37,11 @@ class TreatmentController extends Controller
             $treatment->patient->makeHidden('updated_at');
             $treatment->patient->makeHidden('user_id');
 
-            //formalizar json Treatment
+            //formalize json Treatment
             $treatment->makeHidden('dentist_id');
             $treatment->makeHidden('patient_id');
 
-            //cambiar formato de fechas
+            //change date format
             $treatment->created_at = $this->changeDateFormat($treatment->created_at);
             $treatment->updated_at = $this->changeDateFormat($treatment->updated_at);
             $treatment->ended_at = $this->changeDateFormat($treatment->ended_at);
@@ -46,7 +51,12 @@ class TreatmentController extends Controller
     }
 
 
-    //función que cambia una fecha al formato d-m-Y
+    /**
+     * changed the origin date format to "d-m-y" format
+     * 
+     * @param date
+     * @return date
+     */
     public function changeDateFormat($fecha)
     {
         if ($fecha) {
