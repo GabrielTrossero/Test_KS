@@ -14,7 +14,7 @@ class User extends Model
     public $timestamps = false; //si está en true no me deja modificar el formato de la fecha
 
     protected $fillable = [
-        'name', 'surname', 'gender', 'email', 'password', 'created_at', 'updated_at'
+        'id', 'name', 'surname', 'gender', 'email', 'password', 'created_at', 'updated_at'
     ];
 
     public function patient(){

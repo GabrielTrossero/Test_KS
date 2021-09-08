@@ -16,34 +16,42 @@ class TreatmentController extends Controller
         $treatments = Treatment::all();
 
         foreach ($treatments as $treatment) {
-            $dentist = Dentist::find($treatment->dentist_id);
-            $userDentist = User::find($dentist->user_id);
-            $patient = Patient::find($treatment->patient_id);
-            $userPatient = User::find($patient->user_id);
+            //formalizar json Dentist
+            $treatment->dentist->full_name = $treatment->dentist->user->name .' '. $treatment->dentist->user->surname;
+            $treatment->dentist->email = $treatment->dentist->user->email;
+            $treatment->dentist->makeHidden('user');
+            $treatment->dentist->makeHidden('created_at');
+            $treatment->dentist->makeHidden('updated_at');
+            $treatment->dentist->makeHidden('user_id');
 
-            $dentist->makeHidden('created_at'); //oculto el atributo
-            $dentist->makeHidden('updated_at');
-            $dentist->makeHidden('user_id');
-            $dentist->full_name = $userDentist->name .' '. $userDentist->surname;
-            $dentist->email = $userDentist->email;
+            //formalizar json Patient
+            $treatment->patient->full_name = $treatment->patient->user->name .' '. $treatment->patient->user->surname;
+            $treatment->patient->email = $treatment->patient->user->email;
+            $treatment->patient->makeHidden('user');
+            $treatment->patient->makeHidden('created_at');
+            $treatment->patient->makeHidden('updated_at');
+            $treatment->patient->makeHidden('user_id');
 
-            $patient->makeHidden('created_at');
-            $patient->makeHidden('updated_at');
-            $patient->makeHidden('user_id');
-            $patient->full_name = $userPatient->name .' '. $userPatient->surname;
-            $patient->email = $userPatient->email;
-
-            $treatment->dentist = $dentist;
+            //formalizar json Treatment
             $treatment->makeHidden('dentist_id');
-            $treatment->patient = $patient;
             $treatment->makeHidden('patient_id');
 
             //cambiar formato de fechas
-            $treatment->created_at = Carbon::parse($treatment->created_at)->format('d-m-Y');
-            $treatment->updated_at = Carbon::parse($treatment->updated_at)->format('d-m-Y');
-            $treatment->ended_at = Carbon::parse($treatment->ended_at)->format('d-m-Y');
+            $treatment->created_at = $this->changeDateFormat($treatment->created_at);
+            $treatment->updated_at = $this->changeDateFormat($treatment->updated_at);
+            $treatment->ended_at = $this->changeDateFormat($treatment->ended_at);
         }
 
         return response()->json($treatments);
+    }
+
+
+    //función que cambia una fecha al formato d-m-Y
+    public function changeDateFormat($fecha)
+    {
+        if ($fecha) {
+            return Carbon::parse($fecha)->format('d-m-Y');
+        }
+        else return null;
     }
 }

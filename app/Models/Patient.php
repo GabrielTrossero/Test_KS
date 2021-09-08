@@ -14,11 +14,11 @@ class Patient extends Model
     public $timestamps = false; //si está en true no me deja modificar el formato de la fecha
 
     protected $fillable = [
-        'user_id', 'created_ad', 'updated_ad'
+        'user_id', 'created_at', 'updated_at'
     ];
 
     public function user(){
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function treatment(){

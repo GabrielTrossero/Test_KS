@@ -18,10 +18,10 @@ class Treatment extends Model
     ];
 
     public function patient(){
-        return $this->belongsTo(Patient::class, 'id');
+        return $this->belongsTo(Patient::class, 'patient_id');
     }
 
     public function dentist(){
-        return $this->belongsTo(Dentist::class, 'id');
+        return $this->belongsTo(Dentist::class, 'dentist_id');
     }
 }
