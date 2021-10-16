@@ -24,4 +24,20 @@ class Dentist extends Model
     public function treatment(){
         return $this->hasMany(Treatment::class, 'dentist_id');
     }
+
+    /**
+     * Get fullname of the dentist
+     * 
+     * @return String
+     */
+    public function getFullNameAttribute(){
+        return $this->user->surname . ', ' . $this->user->name;
+    }
+
+    /**
+     * Set fullname of the Model
+     *
+     * @var array
+     */
+    protected $appends = ['full_name'];
 }

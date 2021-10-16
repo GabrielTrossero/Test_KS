@@ -24,4 +24,15 @@ class Treatment extends Model
     public function dentist(){
         return $this->belongsTo(Dentist::class, 'dentist_id');
     }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+        'updated_at' => 'datetime:Y-m-d',
+        'ended_at' => 'datetime:Y-m-d'
+    ];
 }
