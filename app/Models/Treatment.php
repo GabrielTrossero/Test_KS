@@ -10,8 +10,6 @@ class Treatment extends Model
     use HasFactory;
 
     protected $table = "treatment";
-    
-    public $timestamps = false; //if is true, it does not allow me to modify the date format
 
     protected $fillable = [
         'external_id', 'dentist_id', 'patient_id', 'plates', 'created_at', 'updated_at', 'ended_at'

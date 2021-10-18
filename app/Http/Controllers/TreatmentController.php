@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Http\Resources\TreatmentCollection;
 use App\Models\Treatment;
 use App\Models\Dentist;
 use App\Models\Patient;
@@ -18,28 +19,6 @@ class TreatmentController extends Controller
      */
     public function list()
     {
-        $treatments = Treatment::all();
-
-        foreach ($treatments as $treatment) {
-            //formalize json Dentist
-            $treatment->dentist->email = $treatment->dentist->user->email;
-            $treatment->dentist->makeHidden('user');
-            $treatment->dentist->makeHidden('created_at');
-            $treatment->dentist->makeHidden('updated_at');
-            $treatment->dentist->makeHidden('user_id');
-
-            //formalize json Patient
-            $treatment->patient->email = $treatment->patient->user->email;
-            $treatment->patient->makeHidden('user');
-            $treatment->patient->makeHidden('created_at');
-            $treatment->patient->makeHidden('updated_at');
-            $treatment->patient->makeHidden('user_id');
-
-            //formalize json Treatment
-            $treatment->makeHidden('dentist_id');
-            $treatment->makeHidden('patient_id');
-        }
-
-        return response()->json($treatments);
+        return response()->json(new TreatmentCollection(Treatment::all()));
     }
 }
